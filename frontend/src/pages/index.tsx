@@ -15,7 +15,17 @@ export async function getServerSideProps(context: NextPageContext) {
 }
 
 export default function Home() {
-	const { data } = useSession();
+	const { data: session } = useSession();
 
-	return <Box>{data?.user?.username ? <Chat /> : <Auth />}</Box>;
+	const reloadSession = () => {};
+
+	return (
+		<Box>
+			{session?.user?.username ? (
+				<Chat />
+			) : (
+				<Auth session={session} reloadSession={reloadSession} />
+			)}
+		</Box>
+	);
 }
