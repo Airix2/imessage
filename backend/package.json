@@ -1,11 +1,14 @@
 {
   "dependencies": {
     "@graphql-tools/schema": "^8.5.1",
+    "@prisma/client": "^4.11.0",
     "apollo-server-core": "^3.10.2",
     "apollo-server-express": "^3.10.2",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "graphql": "^16.6.0",
     "lodash.merge": "^4.6.2",
+    "next-auth": "^4.20.1",
     "nodemon": "^2.0.22",
     "typescript": "^5.0.2"
   },
@@ -20,6 +23,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "@types/lodash.merge": "^4.6.7"
+    "@types/lodash.merge": "^4.6.7",
+    "prisma": "^4.11.0"
   }
 }

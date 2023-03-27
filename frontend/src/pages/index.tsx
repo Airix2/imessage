@@ -17,12 +17,15 @@ export async function getServerSideProps(context: NextPageContext) {
 export default function Home() {
 	const { data: session } = useSession();
 
-	const reloadSession = () => {};
+	const reloadSession = () => {
+		const event = new Event("visibilitychange");
+		document.dispatchEvent(event);
+	};
 
 	return (
 		<Box>
 			{session?.user?.username ? (
-				<Chat />
+				<Chat session={session} />
 			) : (
 				<Auth session={session} reloadSession={reloadSession} />
 			)}
