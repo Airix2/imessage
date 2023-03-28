@@ -1,10 +1,6 @@
 import { ApolloError } from "apollo-server-core";
-import {
-	CreateUsernameResponse,
-	GraphQLContext,
-	SearchUserResponse,
-	SearchedUser,
-} from "../../util/types";
+import { CreateUsernameResponse, GraphQLContext } from "../../util/types";
+import { User } from "@prisma/client";
 
 const resolvers = {
 	Query: {
@@ -12,7 +8,7 @@ const resolvers = {
 			_: any,
 			args: { username: string },
 			context: GraphQLContext
-		) => {
+		): Promise<Array<User>> => {
 			const { username: searchedUsername } = args;
 			const { session, prisma } = context;
 

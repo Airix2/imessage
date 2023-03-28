@@ -50,10 +50,10 @@ async function startApolloServer() {
 	await server.start();
 	server.applyMiddleware({ app, cors: corsOptions });
 	await new Promise<void>((resolve) =>
-		httpServer.listen({ port: 4000 }, resolve)
+		httpServer.listen({ port: 5000 }, resolve)
 	);
 	console.log(
-		`🚀 Server ready at http://localhost:4000${server.graphqlPath}`
+		`🚀 Server ready at http://localhost:5000${server.graphqlPath}`
 	);
 }
 

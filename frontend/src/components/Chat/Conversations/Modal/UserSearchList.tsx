@@ -1,12 +1,13 @@
 import { SearchedUser } from "@/src/util/types";
-import { Avatar, Flex, Stack, Text } from "@chakra-ui/react";
+import { Avatar, Button, Flex, Stack, Text } from "@chakra-ui/react";
 import React from "react";
 
 interface UserSearchListProps {
 	users: Array<SearchedUser>;
+	addParticipant: (user: SearchedUser) => void;
 }
 
-const UserSearchList = ({ users }: UserSearchListProps) => {
+const UserSearchList = ({ users, addParticipant }: UserSearchListProps) => {
 	return (
 		<>
 			{users.length === 0 ? (
@@ -29,7 +30,22 @@ const UserSearchList = ({ users }: UserSearchListProps) => {
 							}}
 						>
 							<Avatar src="" />
-							<Text color="whiteAlpha.700">{user.username}</Text>
+							<Flex
+								justify="space-between"
+								align="center"
+								width="100%"
+							>
+								<Text color="whiteAlpha.700">
+									{user.username}
+								</Text>
+								<Button
+									bg="brand.100"
+									_hover={{ bg: "brand.100" }}
+									onClick={() => addParticipant(user)}
+								>
+									Select
+								</Button>
+							</Flex>
 						</Stack>
 					))}
 				</Stack>
