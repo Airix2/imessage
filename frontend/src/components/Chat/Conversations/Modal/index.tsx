@@ -49,9 +49,7 @@ const ConversationModal = ({ isOpen, onClose, session }: ModalProps) => {
 
 	const onSearch = (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log("here");
 		searchUsers({ variables: { username } });
-		console.log("over here");
 	};
 
 	const addParticipant = (user: SearchedUser) => {

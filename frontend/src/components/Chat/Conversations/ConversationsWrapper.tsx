@@ -5,6 +5,7 @@ import ConversationList from "./ConversationList";
 import ConversationOperations from "../../../graphql/operations/conversation";
 import { useQuery } from "@apollo/client";
 import { ConversationsData } from "@/src/util/types";
+import { ConversationPopulated } from "@/../backend/src/util/types";
 
 interface ConversationsWrapperProps {
 	session: Session;
@@ -15,7 +16,44 @@ const ConversationsWrapper = ({ session }: ConversationsWrapperProps) => {
 		data: conversationsData,
 		error: conversationsError,
 		loading: conversationsLoading,
+		subscribeToMore,
 	} = useQuery<ConversationsData>(ConversationOperations.Query.conversations);
+
+	const subscribeToNewConversations = () => {
+		subscribeToMore({
+			document: ConversationOperations.Subscriptions.conversationCreated,
+			variables: {},
+			updateQuery: (
+				prev,
+				{
+					subscriptionData,
+				}: {
+					subscriptionData: {
+						data: { conversationCreated: ConversationPopulated };
+					};
+				}
+			) => {
+				if (!subscriptionData.data) return prev;
+				console.log("sub data", subscriptionData);
+
+				const newConversation =
+					subscriptionData.data.conversationCreated;
+
+				return Object.assign({}, prev, {
+					conversations: [newConversation, ...prev.conversations],
+				});
+			},
+		});
+	};
+
+	// Execute subscription on mount
+	useEffect(() => {
+		subscribeToNewConversations();
+	}, []);
+
+	useEffect(() => {
+		console.log("convodata", conversationsData);
+	}, [conversationsData]);
 
 	return (
 		<Box

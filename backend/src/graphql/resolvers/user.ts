@@ -22,7 +22,7 @@ const resolvers = {
 					where: {
 						username: {
 							contains: searchedUsername,
-							not: ownUsername,
+							// not: ownUsername,
 							mode: "insensitive",
 						},
 					},

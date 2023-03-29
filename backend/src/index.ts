@@ -16,6 +16,7 @@ import { GraphQLContext, Session, SubscriptionContext } from "./util/types";
 
 import { WebSocketServer } from "ws";
 import { useServer } from "graphql-ws/lib/use/ws";
+import { PubSub } from "graphql-subscriptions";
 
 async function startApolloServer() {
 	dotenv.config();
@@ -38,7 +39,7 @@ async function startApolloServer() {
 	};
 
 	const prisma = new PrismaClient();
-	// const pubsub
+	const pubsub = new PubSub();
 
 	// Save the returned server's info so we can shutdown this server later
 	const serverCleanup = useServer(
@@ -52,11 +53,13 @@ async function startApolloServer() {
 					return {
 						session,
 						prisma,
+						pubsub,
 					};
 				}
 				return {
 					session: null,
 					prisma,
+					pubsub,
 				};
 			},
 		},
@@ -72,6 +75,7 @@ async function startApolloServer() {
 			return {
 				session,
 				prisma,
+				pubsub,
 			};
 		},
 		plugins: [
