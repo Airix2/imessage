@@ -1,4 +1,4 @@
-import { ApolloError } from "apollo-server-core";
+import { GraphQLError } from "graphql";
 import { GraphQLContext } from "../../util/types";
 import { Prisma } from "@prisma/client";
 
