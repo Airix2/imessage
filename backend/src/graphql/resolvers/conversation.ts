@@ -129,10 +129,6 @@ const resolvers = {
 	},
 };
 
-export interface ConversationCreatedSubscriptionPayload {
-	conversationCreated: ConversationPopulated;
-}
-
 export const participantPopulated =
 	Prisma.validator<Prisma.ConversationParticipantInclude>()({
 		user: {

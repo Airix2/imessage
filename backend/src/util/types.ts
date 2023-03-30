@@ -4,6 +4,7 @@ import {
 	conversationPopulated,
 	participantPopulated,
 } from "../graphql/resolvers/conversation";
+import { messagePopulated } from "../graphql/resolvers/messages";
 import { Context } from "graphql-ws/lib/server";
 import { PubSub } from "graphql-subscriptions";
 
@@ -46,3 +47,20 @@ export type ConversationPopulated = Prisma.ConversationGetPayload<{
 export type ParticipantPopulated = Prisma.ConversationParticipantGetPayload<{
 	include: typeof participantPopulated;
 }>;
+export interface ConversationCreatedSubscriptionPayload {
+	conversationCreated: ConversationPopulated;
+}
+
+// Messages
+export interface SendMessageArgs {
+	id: string;
+	conversationId: string;
+	senderId: string;
+	body: string;
+}
+export type MessagePopulated = Prisma.MessageGetPayload<{
+	include: typeof messagePopulated;
+}>;
+export interface MessageSentSubscriptionPayload {
+	messageSent: MessagePopulated;
+}

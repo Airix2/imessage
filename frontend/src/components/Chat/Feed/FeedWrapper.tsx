@@ -1,7 +1,9 @@
+import { useQuery } from "@apollo/client";
 import { Flex } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
 import React from "react";
+import MessageInput from "./Messages/Input";
 import MessagesHeader from "./Messages/MessagesHeader";
 
 interface FeedWrapperProps {
@@ -22,18 +24,24 @@ const FeedWrapper = ({ session }: FeedWrapperProps) => {
 			direction="column"
 		>
 			{conversationId ? (
-				<Flex
-					direction="column"
-					justify="space-between"
-					overflow="hidden"
-					flexGrow={1}
-				>
-					<MessagesHeader
-						userId={userId}
+				<>
+					<Flex
+						direction="column"
+						justify="space-between"
+						overflow="hidden"
+						flexGrow={1}
+					>
+						<MessagesHeader
+							userId={userId}
+							conversationId={conversationId}
+						/>
+						{/* <Messages /> */}
+					</Flex>
+					<MessageInput
+						session={session}
 						conversationId={conversationId}
 					/>
-					{/* <Messages /> */}
-				</Flex>
+				</>
 			) : (
 				<div>none selected</div>
 			)}
