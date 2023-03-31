@@ -1,5 +1,9 @@
 import { GraphQLError } from "graphql";
-import { ConversationPopulated, GraphQLContext } from "../../util/types";
+import {
+	ConversationCreatedSubscriptionPayload,
+	ConversationPopulated,
+	GraphQLContext,
+} from "../../util/types";
 import { Prisma } from "@prisma/client";
 import { withFilter } from "graphql-subscriptions";
 

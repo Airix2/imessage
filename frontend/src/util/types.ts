@@ -1,5 +1,6 @@
 import {
 	ConversationPopulated,
+	MessagePopulated,
 	ParticipantPopulated,
 } from "../../../backend/src/util/types";
 export interface ICreateUsernameData {
@@ -34,5 +35,13 @@ export interface CreateConversationData {
 	};
 }
 export interface CreateConversationInput {
-	participantIds: String[];
+	participantIds: string[];
+}
+
+// Messages
+export interface MessagesData {
+	messages: [MessagePopulated];
+}
+export interface MessagesVariables {
+	conversationId: string;
 }

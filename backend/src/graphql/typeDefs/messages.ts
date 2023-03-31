@@ -22,7 +22,7 @@ const typeDefs = gql`
 	}
 
 	type Query {
-		messages(conversationId: String): [Messages]
+		messages(conversationId: String): [Message]
 	}
 `;
 

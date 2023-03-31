@@ -7,6 +7,7 @@ import { useQuery } from "@apollo/client";
 import { ConversationsData } from "@/src/util/types";
 import { ConversationPopulated } from "@/../backend/src/util/types";
 import { useRouter } from "next/router";
+import SkeletonLoader from "../../common/SkeletonLoader";
 
 interface ConversationsWrapperProps {
 	session: Session;
@@ -60,24 +61,25 @@ const ConversationsWrapper = ({ session }: ConversationsWrapperProps) => {
 		subscribeToNewConversations();
 	}, []);
 
-	useEffect(() => {
-		console.log("convodata", conversationsData);
-	}, [conversationsData]);
-
 	return (
 		<Box
 			display={{ base: conversationId ? "none" : "flex", md: "flex" }}
 			width={{ base: "100%", md: "400px" }}
 			bg="whiteAlpha.50"
+			flexDirection="column"
+			gap={4}
 			py={6}
 			px={3}
 		>
-			{/* Skeleton Loader */}
-			<ConversationList
-				conversations={conversationsData?.conversations || []}
-				session={session}
-				onViewConversation={onViewConversation}
-			/>
+			{conversationsLoading ? (
+				<SkeletonLoader count={4} width="100%" height="90px" />
+			) : (
+				<ConversationList
+					conversations={conversationsData?.conversations || []}
+					session={session}
+					onViewConversation={onViewConversation}
+				/>
+			)}
 		</Box>
 	);
 };
