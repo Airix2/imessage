@@ -9,7 +9,10 @@ import ConversationModal from "./Modal";
 interface ConversationListProps {
 	session: Session;
 	conversations: ConversationPopulated[];
-	onViewConversation: (conversationId: string) => void;
+	onViewConversation: (
+		conversationId: string,
+		hasSeenLatestMessage: boolean
+	) => void;
 }
 
 const ConversationList = ({
@@ -50,19 +53,34 @@ const ConversationList = ({
 				isOpen={isOpen}
 				onClose={onClose}
 			/>
-			{conversations.map((conversation) => (
-				<ConversationItem
-					onClick={() => onViewConversation(conversation.id)}
-					userId={userId}
-					isSelected={
-						conversation.id === router?.query?.conversationId
-					}
-					conversation={conversation}
-					key={conversation.id}
-					hasSeenLatestMessage={false}
-					onDeleteConversation={() => {}}
-				/>
-			))}
+			{conversations.map((conversation) => {
+				const participant = conversation.participants.find(
+					(p) => p.user.id === userId
+				);
+
+				if (!participant) {
+					throw new Error("Participant is undefined");
+				}
+
+				return (
+					<ConversationItem
+						onClick={() =>
+							onViewConversation(
+								conversation.id,
+								participant?.hasSeenLatestMessage
+							)
+						}
+						userId={userId}
+						isSelected={
+							conversation.id === router?.query?.conversationId
+						}
+						conversation={conversation}
+						key={conversation.id}
+						hasSeenLatestMessage={participant?.hasSeenLatestMessage}
+						onDeleteConversation={() => {}}
+					/>
+				);
+			})}
 		</Box>
 	);
 };
